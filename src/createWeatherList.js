@@ -11,5 +11,5 @@ export default function createWeatherList(forecastDays) {
       date: forecast["day"]["date"],
     });
   });
-  console.log(weatherList);
+  return weatherList;
 }

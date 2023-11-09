@@ -17,7 +17,7 @@ async function getWeather(location) {
   else if (response.status === 400) throw new Error("Not found");
   const data = await response.json();
   console.log(data);
-  createWeatherList(data.forecast.forecastday);
+  return createWeatherList(data.forecast.forecastday);
 }
 
 function handleGetWeatherError(fn) {
