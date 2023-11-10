@@ -1,5 +1,6 @@
 import "./style.css";
 import getWeather from "./getWeather";
+import getGif from "./getGif";
 
 const submitButton = document.querySelector("button");
 
@@ -12,12 +13,12 @@ async function handleSubmit(e) {
   const weatherList = await getWeather(location);
   console.log(weatherList);
   resetContainer();
-  weatherList.forEach((weather) => {
-    createWeatherCard(weather);
-  });
+  for (let i = 0; i < weatherList.length; i++) {
+    createWeatherCard(weatherList[i]);
+  }
 }
 
-function createWeatherCard(weather) {
+async function createWeatherCard(weather) {
   const container = document.querySelector(".weather");
   const div = document.createElement("div");
   const inputValue = document.querySelector(
@@ -34,6 +35,7 @@ function createWeatherCard(weather) {
     createSpanElement("average Humidity", weather)
   );
   container.appendChild(div);
+  div.append(await createGif(weather.condition));
 }
 
 function createSpanElement(key, weather) {
@@ -47,6 +49,19 @@ function createSpanElement(key, weather) {
   return span;
 }
 
+async function createGif(condition) {
+  const div = document.createElement("div");
+  const p = document.createElement("p");
+  p.textContent = "Rain possibility";
+  const url = await getGif(condition);
+  const img = document.createElement("img");
+  img.setAttribute("width", "100px");
+  img.setAttribute("height", "100px");
+  img.src = url;
+
+  div.append(p, img);
+  return div;
+}
 function resetContainer() {
   const container = document.querySelector(".weather");
   container.textContent = "";
