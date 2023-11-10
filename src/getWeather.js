@@ -1,5 +1,6 @@
 export default handleGetWeatherError(getWeather);
 
+import { resetContainer } from ".";
 import createWeatherObject from "./createWeatherList";
 
 async function getWeather(location) {
@@ -23,10 +24,9 @@ async function getWeather(location) {
 function handleGetWeatherError(fn) {
   return function (...params) {
     return fn(...params).catch((err) => {
+      resetContainer();
       const location = document.querySelector(".location");
       location.textContent = err.message;
-      const weatherCards = document.querySelector(".weatherCards");
-      weatherCards.textContent = "";
     });
   };
 }

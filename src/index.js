@@ -71,7 +71,7 @@ async function createGif(condition) {
   div.append(p, img);
   return div;
 }
-function resetContainer() {
+export function resetContainer() {
   const location = document.querySelector(".location");
   location.textContent = "";
   const weatherCards = document.querySelector(".weatherCards");
