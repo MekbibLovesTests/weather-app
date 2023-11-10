@@ -4,7 +4,11 @@
   box-sizing: border-box;
 }
 
-.weather {
+.weather > div {
   display: grid;
   grid-template-columns: repeat(4,1fr);
+}
+
+.weather h1 {
+  text-align: center;
 }

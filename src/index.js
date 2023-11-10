@@ -10,16 +10,21 @@ async function handleSubmit(e) {
   const location = document.querySelector("input").value;
   if (location === "") return;
   e.preventDefault();
-  const weatherList = await getWeather(location);
-  console.log(weatherList);
+  const { name, weatherList } = await getWeather(location);
   resetContainer();
+  changeLocationName(name);
   for (let i = 0; i < weatherList.length; i++) {
     createWeatherCard(weatherList[i]);
   }
 }
 
+function changeLocationName(name) {
+  const location = document.querySelector(".location");
+  location.textContent = name;
+}
+
 async function createWeatherCard(weather) {
-  const container = document.querySelector(".weather");
+  const weatherCards = document.querySelector(".weatherCards");
   const div = document.createElement("div");
   const inputValue = document.querySelector(
     "input[type = radio]:checked"
@@ -34,7 +39,7 @@ async function createWeatherCard(weather) {
     createSpanElement(temperatureScale, weather),
     createSpanElement("average Humidity", weather)
   );
-  container.appendChild(div);
+  weatherCards.appendChild(div);
   div.append(await createGif(weather.condition));
 }
 
@@ -63,6 +68,8 @@ async function createGif(condition) {
   return div;
 }
 function resetContainer() {
-  const container = document.querySelector(".weather");
-  container.textContent = "";
+  const location = document.querySelector(".location");
+  location.textContent = "";
+  const weatherCards = document.querySelector(".weatherCards");
+  weatherCards.textContent = "";
 }

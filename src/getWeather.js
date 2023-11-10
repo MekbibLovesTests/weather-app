@@ -1,6 +1,6 @@
 export default handleGetWeatherError(getWeather);
 
-import createWeatherList from "./createWeatherList";
+import createWeatherObject from "./createWeatherList";
 
 async function getWeather(location) {
   const formattedLocation = formatLocation(location);
@@ -17,7 +17,7 @@ async function getWeather(location) {
   else if (response.status === 400) throw new Error("Not found");
   const data = await response.json();
   console.log(data);
-  return createWeatherList(data.forecast.forecastday);
+  return createWeatherObject(data.forecast.forecastday, data.location.name);
 }
 
 function handleGetWeatherError(fn) {

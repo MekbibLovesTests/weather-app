@@ -1,4 +1,4 @@
-export default function createWeatherList(forecastDays) {
+export default function createWeatherObject(forecastDays, name) {
   const weatherList = [];
   forecastDays.forEach((forecast) => {
     weatherList.push({
@@ -9,5 +9,6 @@ export default function createWeatherList(forecastDays) {
       date: forecast["date"],
     });
   });
-  return weatherList;
+  console.log(name);
+  return { name, weatherList };
 }
