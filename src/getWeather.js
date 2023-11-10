@@ -23,7 +23,10 @@ async function getWeather(location) {
 function handleGetWeatherError(fn) {
   return function (...params) {
     return fn(...params).catch((err) => {
-      console.log("Error", err);
+      const location = document.querySelector(".location");
+      location.textContent = err.message;
+      const weatherCards = document.querySelector(".weatherCards");
+      weatherCards.textContent = "";
     });
   };
 }

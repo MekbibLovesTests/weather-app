@@ -10,11 +10,15 @@ async function handleSubmit(e) {
   const location = document.querySelector("input").value;
   if (location === "") return;
   e.preventDefault();
-  const { name, weatherList } = await getWeather(location);
-  resetContainer();
-  changeLocationName(name);
-  for (let i = 0; i < weatherList.length; i++) {
-    createWeatherCard(weatherList[i]);
+  try {
+    const { name, weatherList } = await getWeather(location);
+    resetContainer();
+    changeLocationName(name);
+    for (let i = 0; i < weatherList.length; i++) {
+      createWeatherCard(weatherList[i]);
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
 
