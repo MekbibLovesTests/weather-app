@@ -6,7 +6,7 @@ import createWeatherObject from "./createWeatherList";
 async function getWeather(location) {
   const formattedLocation = formatLocation(location);
   const request = new Request(
-    `http://api.weatherapi.com/v1/forecast.json?key=c675b2e8fe3c440abd162043230711&q=${formattedLocation}&days=4&aqi=no&alerts=no`,
+    `https://api.weatherapi.com/v1/forecast.json?key=c675b2e8fe3c440abd162043230711&q=${formattedLocation}&days=4&aqi=no&alerts=no`,
     {
       mode: "cors",
       method: "GET",
