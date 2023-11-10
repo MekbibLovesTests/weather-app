@@ -3,9 +3,12 @@ import getWeather from "./getWeather";
 import getGif from "./getGif";
 
 const submitButton = document.querySelector("button");
-
 submitButton.addEventListener("click", handleSubmit);
 
+const radioButtons = document.querySelectorAll(`input[type="radio"]`);
+radioButtons.forEach((radio) => {
+  radio.addEventListener("click", changeTemperatureScale);
+});
 async function handleSubmit(e) {
   const location = document.querySelector("input").value;
   if (location === "") return;
@@ -30,24 +33,17 @@ function changeLocationName(name) {
 async function createWeatherCard(weather) {
   const weatherCards = document.querySelector(".weatherCards");
   const div = document.createElement("div");
-  const inputValue = document.querySelector(
-    "input[type = radio]:checked"
-  ).value;
-  let temperatureScale = "average temp in c";
 
-  if (inputValue === "fahrenheit") {
-    temperatureScale = "average temp in f";
-  }
   div.append(
     createSpanElement("date", weather),
-    createSpanElement(temperatureScale, weather),
+    createTemperatureSpanElement(weather),
     createSpanElement("average Humidity", weather)
   );
   weatherCards.appendChild(div);
   div.append(await createGif(weather.condition));
 }
 
-function createSpanElement(key, weather) {
+function createSpanElement(key, weather, data_attribute = null) {
   const span = document.createElement("span");
   const keyP = document.createElement("p");
   keyP.textContent = key;
@@ -58,6 +54,34 @@ function createSpanElement(key, weather) {
   return span;
 }
 
+function createTemperatureSpanElement(weather) {
+  const inputValue = document.querySelector(
+    "input[type = radio]:checked"
+  ).value;
+  let scale;
+  let key;
+  let opposite_key;
+  if (inputValue === "fahrenheit") {
+    scale = "fahrenheit";
+    key = "average temp in f";
+    opposite_key = "average temp in c";
+  } else {
+    scale = "celsius";
+    key = "average temp in c";
+    opposite_key = "average temp in f";
+  }
+  const span = document.createElement("span");
+  const keyP = document.createElement("p");
+  keyP.textContent = key;
+  const valueP = document.createElement("p");
+  valueP.textContent = weather[key];
+  keyP.setAttribute("scale", scale);
+  valueP.setAttribute("opposite_temperature", weather[opposite_key]);
+
+  span.append(keyP, valueP);
+
+  return span;
+}
 async function createGif(condition) {
   const div = document.createElement("div");
   const p = document.createElement("p");
@@ -76,4 +100,28 @@ export function resetContainer() {
   location.textContent = "";
   const weatherCards = document.querySelector(".weatherCards");
   weatherCards.textContent = "";
+}
+
+function changeTemperatureScale(e) {
+  const value = e.target.value;
+  const scaleList = document.querySelectorAll("[scale]");
+  const temperatureList = document.querySelectorAll("[opposite_temperature]");
+  if (scaleList.length === 0 || scaleList[0].scale === value) return;
+
+  scaleList.forEach((scale) => {
+    if (value === "celsius") {
+      scale.textContent = "average temp in c";
+      scale.scale = value;
+    } else {
+      scale.textContent = "average temp in f";
+      scale.scale = value;
+    }
+  });
+
+  temperatureList.forEach((temperature) => {
+    const textContentCopy = temperature.textContent;
+
+    temperature.textContent = temperature.getAttribute("opposite_temperature");
+    temperature.setAttribute("opposite_temperature", textContentCopy);
+  });
 }
