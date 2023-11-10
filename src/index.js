@@ -46,7 +46,7 @@ async function createWeatherCard(weather) {
 function createSpanElement(key, weather, data_attribute = null) {
   const span = document.createElement("span");
   const keyP = document.createElement("p");
-  keyP.textContent = key;
+  keyP.textContent = key.toUpperCase();
   const valueP = document.createElement("p");
   valueP.textContent = weather[key];
   span.append(keyP, valueP);
@@ -72,7 +72,7 @@ function createTemperatureSpanElement(weather) {
   }
   const span = document.createElement("span");
   const keyP = document.createElement("p");
-  keyP.textContent = key;
+  keyP.textContent = key.toUpperCase();
   const valueP = document.createElement("p");
   valueP.textContent = weather[key];
   keyP.setAttribute("scale", scale);
@@ -110,10 +110,10 @@ function changeTemperatureScale(e) {
 
   scaleList.forEach((scale) => {
     if (value === "celsius") {
-      scale.textContent = "average temp in c";
+      scale.textContent = "average temp in c".toUpperCase();
       scale.scale = value;
     } else {
-      scale.textContent = "average temp in f";
+      scale.textContent = "average temp in f".toUpperCase();
       scale.scale = value;
     }
   });

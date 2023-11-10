@@ -9,14 +9,17 @@
 </head>
 <div>
   <form action="#">
-    <label for="location">Location</label>
-    <input type="search" name="location" id="location" required />
-    <button type="submit">Get Weather</button>
+    <div>
+      <label for="location">Location</label>
+      <input type="search" name="location" id="location" required />
+      <button type="submit">Get Weather</button>
+    </div>
+
     <fieldset>
       <legend>Temperature scales</legend>
-      <input type="radio" name="temperature" id="celsius" value="celsius" checked>
+      <input type="radio" name="temperature" id="celsius" value="celsius" checked />
       <label for="celsius">Celsius</label>
-      <input type="radio" name="temperature" id="fahrenheit" value="fahrenheit">
+      <input type="radio" name="temperature" id="fahrenheit" value="fahrenheit" />
       <label for="fahrenheit">Fahrenheit</label>
     </fieldset>
   </form>
